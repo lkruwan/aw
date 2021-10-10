@@ -1,3 +1,4 @@
+
 /* Copyright (C) 2021 TENUX-Neotro.
 Licensed under the  GPL-3.0 License;
 you may not use this file except in compliance with the License.
@@ -13,7 +14,7 @@ const Language = require('../language');
 const Lang = Language.getString('amazone');
 const YTV_DESC = "Youtube Video Downloader V2 ."
 const YT_NEED = "*need word!.*"
-const DWLOAD_VID = "*🎭Downloading Your Video...*"
+const DWLOAD_VID = "*Downloading Your Video...*"
 const YTV_UP = "*🚀Uploading Your Video...*"
 const NO_RESULT = "*🌀can't Find Anything...*"
 
@@ -36,7 +37,7 @@ if (Config.WORKTYPE == 'private') {
             const videoBuffer = await axios.get(link, {responseType: 'arraybuffer'})
     
             await message.client.sendMessage(message.jid,YTV_UP,MessageType.text);
-            await message.client.sendMessage(message.jid,Buffer.from(videoBuffer.data), MessageType.document, {mimetype: Mimetype.mp4, ptt: false})
+            await message.client.sendMessage(message.jid,Buffer.from(videoBuffer.data), MessageType.document, {mimetype: Mimetype.mp4, ptt: false, thumbnail: thumb})
         })
         .catch(
           async (err) => await message.client.sendMessage(message.jid,NO_RESULT,MessageType.text, {quoted: message.data}),
@@ -62,7 +63,7 @@ else if (Config.WORKTYPE == 'public') {
             const videoBuffer = await axios.get(link, {responseType: 'arraybuffer'})
     
             await message.client.sendMessage(message.jid,YTV_UP,MessageType.text, {quoted: message.data});
-            await message.client.sendMessage(message.jid,Buffer.from(videoBuffer.data), MessageType.document, {mimetype: Mimetype.mp4, ptt: false})
+            await message.client.sendMessage(message.jid,Buffer.from(videoBuffer.data), MessageType.document, {mimetype: Mimetype.mp4, ptt: false, thumbnail: thumb})
         })
         .catch(
           async (err) => await message.client.sendMessage(message.jid,NO_RESULT,MessageType.text, {quoted: message.data}),
@@ -70,3 +71,6 @@ else if (Config.WORKTYPE == 'public') {
       },
     )
 }
+
+
+const thumb  = fs.readFileSync('./uploads//thumb/taptodown.jpg')
